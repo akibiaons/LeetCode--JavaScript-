@@ -42,3 +42,7 @@ var validPartition = function (nums) {
   }
   return true;
 };
+
+// Below I test the results
+console.log(validPartition([4, 4, 4, 5, 6]));
+console.log(validPartition([1, 1, 1, 2]));
