@@ -44,5 +44,39 @@ var validPartition = function (nums) {
 };
 
 // Below I test the results
+/*
 console.log(validPartition([4, 4, 4, 5, 6])); // should be true but it outputs false...
 console.log(validPartition([1, 1, 1, 2])); // should be false and does put out false...
+*/
+//=================================================================================================================================================================
+
+// A correct solution will be shown below..
+var validPartition = function (nums, memo = {}, start = 0) {
+  if (start >= nums.length) return true;
+  if (start in memo) return memo[start];
+
+  let isTwoEqual = nums[start] === nums[start + 1];
+
+  let isThreeEqual =
+    nums[start] === nums[start + 1] && nums[start] === nums[start + 2];
+
+  let isIncreasing =
+    nums[start] + 1 === nums[start + 1] &&
+    nums[start + 1] + 1 === nums[start + 2];
+
+  let isValid = false;
+
+  if (isIncreasing) {
+    isValid = validPartition(nums, memo, start + 3);
+  } else if (isThreeEqual) {
+    isValid =
+      validPartition(nums, memo, start + 2) ||
+      validPartition(nums, memo, start + 3);
+  } else if (isTwoEqual) isValid = validPartition(nums, memo, start + 2);
+
+  memo[start] = isValid;
+  return isValid;
+};
+
+console.log(validPartition([4, 4, 4, 5, 6])); // should be true
+console.log(validPartition([1, 1, 1, 2])); // should be false
