@@ -25,5 +25,20 @@ var validPartition = function (nums) {
   // Below I am checking for valid partitions
   for (let num in freqMap) {
     num = parseInt(num); // This line converts the string key back into an integer...
+
+    while (freqMap[num] > 0) {
+      if (freqMap[num] >= 3) {
+        freqMap[num] -= 3;
+      } else if (freqMap[num] >= 2) {
+        freqMap[num] -= 2;
+      } else if (freqMap[num + 1] > 0 && freqMap[num + 2] > 0) {
+        freqMap[num]--;
+        freqMap[num + 1]--;
+        freqMap[num + 2]--;
+      } else {
+        return false;
+      }
+    }
   }
+  return true;
 };
